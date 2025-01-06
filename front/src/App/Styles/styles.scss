@@ -13,3 +13,8 @@ body {
   cursor: default;
   overflow-x: hidden;
 }
+
+.container {
+  display: flex;
+  justify-content: center;
+}

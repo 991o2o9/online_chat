@@ -5,10 +5,10 @@ export default defineConfig({
   plugins: [react()],
   resolve: {
     alias: {
-      utils: '/src/Utils',
-      modules: '/src/Modules',
-      pages: '/src/Pages',
-      ui: '/src/Ui',
+      Utils: '/src/Utils',
+      Modules: '/src/Modules',
+      Pages: '/src/Pages',
+      Ui: '/src/Ui',
       mixins: '/src/App/Styles/mixins.scss',
     },
   },

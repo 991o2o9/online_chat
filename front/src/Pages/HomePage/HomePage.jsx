@@ -1,9 +1,9 @@
-import { Typography } from '../../Ui/Typography/Typography';
+import { WelcomeModule } from 'Modules/HomeModule/WelcomeModule/WelcomeModule';
 
 export const HomePage = () => {
   return (
     <div>
-      <Typography>loh</Typography>
+      <WelcomeModule />
     </div>
   );
 };
