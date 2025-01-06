@@ -2,10 +2,9 @@ import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { io } from 'socket.io-client';
 import styles from './Chat.module.scss';
-import { Typography } from 'Ui/Typography/Typography';
-import { Input } from 'Ui/Input/Input';
-import EmojiPicker from 'emoji-picker-react';
 import { path } from 'Utils/Constants/Constants';
+import { Messages } from './Components/Messages/Messages';
+import { Form } from './Components/Form/Form';
 
 export const Chat = () => {
   const { search } = useLocation();
@@ -35,7 +34,6 @@ export const Chat = () => {
       });
 
       socket.on('message', (message) => {
-        console.log('New message received:', message);
         setState((prevState) => [...prevState, message]);
       });
     }
@@ -76,45 +74,15 @@ export const Chat = () => {
           Leave Room
         </button>
       </div>
-      <div className={styles.messages}>
-        {state.map((msg, index) => {
-          const itsMe =
-            params.user &&
-            params.user.trim().toLowerCase() === msg.user.trim().toLowerCase();
-          const className = itsMe ? styles.me : styles.user;
-          return (
-            <div className={`${styles.message} ${className}`} key={index}>
-              <Typography>
-                {typeof msg.user === 'object' ? msg.user.name : msg.user}
-              </Typography>
-              <div className={styles.text}>{msg.message}</div>
-            </div>
-          );
-        })}
-      </div>
-
-      <form className={styles.form} onSubmit={handleSubmit}>
-        <div className={styles.inputs}>
-          <Input
-            name="message"
-            value={message}
-            placeholder="Ваше сообщение"
-            onChange={handleChange}
-            required={true}
-          />
-        </div>
-        <div className={styles.emoji}>
-          <i onClick={() => setIsOpen(!isOpen)}>Emoji</i>
-          {isOpen && (
-            <div className={styles.emo}>
-              <EmojiPicker onEmojiClick={onEmojiClick} />
-            </div>
-          )}
-        </div>
-        <div className={styles.btn}>
-          <button type="submit">Send</button>
-        </div>
-      </form>
+      <Messages params={params} state={state} />
+      <Form
+        handleSubmit={handleSubmit}
+        message={message}
+        handleChange={handleChange}
+        isOpen={isOpen}
+        setIsOpen={setIsOpen}
+        onEmojiClick={onEmojiClick}
+      />
     </div>
   );
 };

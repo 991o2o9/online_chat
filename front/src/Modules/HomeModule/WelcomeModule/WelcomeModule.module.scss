@@ -4,7 +4,7 @@
   justify-content: center;
   align-items: center;
   .block {
-    max-width: 500px;
+    max-width: 450px;
     width: 100%;
     height: 320px;
     padding: 25px;
@@ -18,6 +18,8 @@
       display: flex;
       flex-direction: column;
       gap: 14px;
+      max-width: 300px;
+      width: 100%;
       .inputs {
         display: flex;
         flex-direction: column;
