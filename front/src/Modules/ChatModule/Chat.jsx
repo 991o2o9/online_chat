@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { io } from 'socket.io-client';
 import styles from './Chat.module.scss';
 import { Typography } from 'Ui/Typography/Typography';
 import { Input } from 'Ui/Input/Input';
 import EmojiPicker from 'emoji-picker-react';
+import { path } from 'Utils/Constants/Constants';
 
 export const Chat = () => {
   const { search } = useLocation();
@@ -12,18 +13,30 @@ export const Chat = () => {
   const [state, setState] = useState([]);
   const [message, setMessage] = useState('');
   const [isOpen, setIsOpen] = useState(false);
-  const [socket] = useState(() => io('http://localhost:5000'));
+  const navigate = useNavigate();
   const [userCount, setUserCount] = useState(0);
+  const [socket] = useState(() => io('http://localhost:5000'));
 
   useEffect(() => {
     const searchParams = Object.fromEntries(new URLSearchParams(search));
     setParams(searchParams);
 
     if (searchParams.name && searchParams.room) {
-      socket.emit('join', searchParams, (error) => {
-        if (error) {
-          alert(error);
+      socket.emit('join', searchParams);
+
+      socket.on('previousMessages', (messages) => {
+        if (messages) {
+          setState(messages);
         }
+      });
+
+      socket.on('roomData', ({ userCount }) => {
+        setUserCount(userCount);
+      });
+
+      socket.on('message', (message) => {
+        console.log('New message received:', message);
+        setState((prevState) => [...prevState, message]);
       });
     }
 
@@ -32,34 +45,12 @@ export const Chat = () => {
     };
   }, [search, socket]);
 
-  useEffect(() => {
-    const handleMessage = ({ user, message }) => {
-      setState((prevMessages) => [
-        ...prevMessages,
-        {
-          user: user?.name || 'Anonymous',
-          message: message || 'Empty message',
-        },
-      ]);
-    };
-
-    const handleRoomData = ({ users }) => {
-      setUserCount(users.length);
-    };
-
-    socket.on('message', handleMessage);
-    socket.on('roomData', handleRoomData);
-
-    return () => {
-      socket.off('message', handleMessage);
-      socket.off('roomData', handleRoomData);
-    };
-  }, [socket]);
-
   const leftRoom = () => {
     socket.emit('leave', params);
     setParams({ room: '', user: '' });
     setState([]);
+    setUserCount(0);
+    navigate(path.home);
   };
 
   const handleChange = (e) => setMessage(e.target.value);
@@ -67,11 +58,7 @@ export const Chat = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (message.trim()) {
-      socket.emit('sendMessage', { message, params }, (error) => {
-        if (error) {
-          console.error('Message send failed:', error);
-        }
-      });
+      socket.emit('sendMessage', { message, params });
       setMessage('');
     }
   };
@@ -97,7 +84,9 @@ export const Chat = () => {
           const className = itsMe ? styles.me : styles.user;
           return (
             <div className={`${styles.message} ${className}`} key={index}>
-              <Typography>{msg.user}</Typography>
+              <Typography>
+                {typeof msg.user === 'object' ? msg.user.name : msg.user}
+              </Typography>
               <div className={styles.text}>{msg.message}</div>
             </div>
           );
