@@ -1,0 +1,86 @@
+@import 'mixins';
+
+.typography {
+  margin: 0;
+  padding: 0;
+  color: #e3e3e3;
+
+  &.h1 {
+    font-size: 48px;
+    line-height: 57.6px;
+    font-weight: 700;
+  }
+
+  &.h2 {
+    font-size: 42px;
+    line-height: 36px;
+    font-weight: 700;
+  }
+
+  &.h3 {
+    font-size: 32px;
+    line-height: 36px;
+    font-weight: 600;
+  }
+
+  &.h4 {
+    font-size: 24px;
+    line-height: 28px;
+    font-weight: 400;
+  }
+
+  &.h5 {
+    font-size: 20px;
+    line-height: 24px;
+    font-weight: 500;
+  }
+
+  &.body-L {
+    font-size: 16px;
+    line-height: 20px;
+    font-weight: 400;
+  }
+
+  &.body-S {
+    font-size: 12px;
+    line-height: 20px;
+    font-weight: 400;
+  }
+}
+.typography {
+  margin: 0;
+  padding: 0;
+  color: #e3e3e3;
+
+  @include Mobile {
+    &.h1 {
+      font-size: 32px;
+      line-height: 38.4px;
+      font-weight: 600;
+    }
+
+    &.h2 {
+      font-size: 32px;
+    }
+
+    &.h3 {
+      font-size: 20px;
+    }
+
+    &.h4 {
+      font-size: 20px;
+    }
+
+    &.h5 {
+      font-size: 16px;
+    }
+
+    &.body-L {
+      font-size: 16px;
+    }
+
+    &.body-S {
+      font-size: 12px;
+    }
+  }
+}

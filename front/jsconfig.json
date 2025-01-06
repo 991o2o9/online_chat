@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "baseUrl": "src",
+    "paths": {
+      "modules": ["src/Modules/*"],
+      "pages": ["src/Pages/*"],
+      "ui": ["src/Ui/*"],
+      "mixins": ["src/App/Styles/mixins.scss"],
+      "utils": ["src/Utils/*"]
+    },
+    "moduleResolution": "node"
+  }
+}
