@@ -31,7 +31,9 @@ export const WelcomeModule = () => {
       <div className={styles.section}>
         <div className={styles.block}>
           <div className={styles.heading}>
-            <Typography variant="h2">Join</Typography>
+            <Typography variant="h2" color="#fff">
+              Join
+            </Typography>
           </div>
           <form className={styles.form} onSubmit={handleConnect}>
             <div className={styles.inputs}>
@@ -51,7 +53,7 @@ export const WelcomeModule = () => {
               />
             </div>
             <button className={styles.btn}>
-              <Typography size="L" color="#e3e3e3">
+              <Typography variant="h5" color="#000000">
                 Connect
               </Typography>
             </button>
