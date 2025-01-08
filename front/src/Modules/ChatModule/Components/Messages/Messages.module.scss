@@ -1,33 +1,51 @@
+@import 'mixins';
 .messages {
   flex-grow: 1;
   overflow-y: auto;
-  padding: 10px;
-  background-color: #fff;
-  border-radius: 8px;
-  margin-bottom: 20px;
-  box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.05);
-
-  .message {
+  background-image: url(../../../../Assets/Img/pattern.svg);
+  .content {
+    padding: 10px;
     display: flex;
     flex-direction: column;
-    margin-bottom: 12px;
-    padding: 8px;
-    border-radius: 8px;
-  }
+    width: 40%;
+    @include Tablet {
+      width: 100%;
+    }
 
-  .me {
-    background-color: #a0d0ff;
-    width: fit-content;
-    margin-left: auto;
-    align-self: flex-end;
-  }
+    .message {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 12px;
+      padding: 8px;
+      border-radius: 18px;
+      .userText {
+        color: #3c80be !important;
+      }
+    }
 
-  .user {
-    background-color: #e9ecef;
-  }
+    .me {
+      background-color: #766ac8;
+      width: fit-content;
+      border-bottom-left-radius: 0;
+      @include Tablet {
+        border-bottom-left-radius: 18px;
+        margin-left: auto;
+        align-self: flex-end;
+        border-bottom-right-radius: 0px;
+        max-width: 550px;
+      }
+    }
 
-  .text {
-    font-size: 14px;
-    font-family: 'Poppins', serif;
+    .user {
+      position: relative;
+      background-color: #212121;
+      width: fit-content;
+      border-bottom-left-radius: 0;
+    }
+
+    .text {
+      font-size: 14px;
+      font-family: 'Poppins', serif;
+    }
   }
 }
