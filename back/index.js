@@ -10,14 +10,21 @@ const app = express();
 
 connectDB();
 
-app.use(cors({ origin: '*' }));
+app.use(
+  cors({
+    origin: process.env.CLIENT_ORIGIN || '*',
+    methods: ['GET', 'POST'],
+    credentials: true,
+  })
+);
 
 const server = http.createServer(app);
 
 const io = new Server(server, {
   cors: {
-    origin: '*',
+    origin: process.env.CLIENT_ORIGIN || '*',
     methods: ['GET', 'POST'],
+    credentials: true,
   },
 });
 
