@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { io } from 'socket.io-client';
 import styles from './Chat.module.scss';
-import { path } from 'Utils/Constants/Constants';
+import { BASE_URL, path } from 'Utils/Constants/Constants';
 import { Messages } from './Components/Messages/Messages';
 import { Form } from './Components/Form/Form';
 
@@ -14,7 +14,7 @@ export const Chat = () => {
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
   const [userCount, setUserCount] = useState(0);
-  const [socket] = useState(() => io('http://localhost:5000'));
+  const [socket] = useState(() => io(`${BASE_URL}`));
 
   useEffect(() => {
     const searchParams = Object.fromEntries(new URLSearchParams(search));
